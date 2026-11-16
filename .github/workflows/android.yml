@@ -1,0 +1,47 @@
+name: Android-APK bauen
+
+on:
+  push:
+    branches: ['**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - run: npm ci
+      - name: Tests
+        run: npm test
+      - name: Web-App bauen
+        run: npm run build
+      - name: In Android-Projekt kopieren
+        run: npx cap sync android
+      - name: APK bauen
+        working-directory: android
+        run: chmod +x gradlew && ./gradlew assembleDebug --no-daemon
+      - run: cp android/app/build/outputs/apk/debug/app-debug.apk MyPlan.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MyPlan-apk
+          path: MyPlan.apk
+      - name: APK als Release bereitstellen
+        if: github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: aktuell
+          name: Aktuelle APK
+          body: Automatisch gebaut aus dem neuesten Stand. MyPlan.apk herunterladen und auf dem Handy öffnen.
+          files: MyPlan.apk
+          make_latest: true

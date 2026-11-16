@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">MyPlan</string>
+    <string name="title_activity_main">MyPlan</string>
+    <string name="package_name">de.franzkoe.myplan</string>
+    <string name="custom_url_scheme">de.franzkoe.myplan</string>
+</resources>
