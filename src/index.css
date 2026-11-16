@@ -1,0 +1,163 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/geist';
+@import '@fontsource-variable/geist-mono';
+
+/* Designrichtung (unslop): ruhig, genau, ausdauernd. Welt: Trainingstagebuch und Tartanbahn.
+   Graphit-Neutrale, ein Akzent (Bahnrot). Farbe trägt Bedeutung: Wärme = Intensität. */
+:root {
+  --bg: #fafafa;
+  --card: #ffffff;
+  --raised: #f1f1f2;
+  --line: rgb(23 23 23 / 0.1);
+  --line-strong: rgb(23 23 23 / 0.22);
+  --ink: #171717;
+  --ink2: #474747;
+  --ink3: #6b6b6b;
+  --accent: #b4472b;
+  --accent-ink: #9f3b21;
+  --on-accent: #ffffff;
+  --primary: #171717;
+  --on-primary: #ffffff;
+  /* Intensität */
+  --easy: #8a8a8f;
+  --steady: #a8741a;
+  --hard: #b4472b;
+  --strength: #46607e;
+  --good: #1d7a43;
+  --bad: #c22f2f;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+  color-scheme: light;
+}
+:root[data-theme='dark'] {
+  --bg: #121213;
+  --card: #19191b;
+  --raised: #242426;
+  --line: rgb(237 237 237 / 0.1);
+  --line-strong: rgb(237 237 237 / 0.24);
+  --ink: #ededed;
+  --ink2: #b4b4b9;
+  --ink3: #8f8f95;
+  --accent: #e0623f;
+  --accent-ink: #ee7f5f;
+  --on-accent: #1a0d08;
+  --primary: #ededed;
+  --on-primary: #171717;
+  --easy: #8f8f95;
+  --steady: #d19a3a;
+  --hard: #e0623f;
+  --strength: #7d9cc0;
+  --good: #4cc38a;
+  --bad: #ef6a6a;
+  --shadow: none;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --font-sans: 'Geist Variable', system-ui, sans-serif;
+  --font-mono: 'Geist Mono Variable', ui-monospace, monospace;
+  --color-bg: var(--bg);
+  --color-card: var(--card);
+  --color-raised: var(--raised);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-ink2: var(--ink2);
+  --color-ink3: var(--ink3);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-on-accent: var(--on-accent);
+  --color-primary: var(--primary);
+  --color-on-primary: var(--on-primary);
+  --color-easy: var(--easy);
+  --color-steady: var(--steady);
+  --color-hard: var(--hard);
+  --color-strength: var(--strength);
+  --color-good: var(--good);
+  --color-bad: var(--bad);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 22px;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+button {
+  cursor: pointer;
+}
+}
+.num {
+  font-variant-numeric: tabular-nums;
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+input[type='number']::-webkit-inner-spin-button {
+  display: none;
+}
+.press {
+  transition:
+    transform 140ms var(--ease-out),
+    background-color 140ms var(--ease-out),
+    opacity 140ms var(--ease-out);
+}
+.press:active {
+  transform: scale(0.98);
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+@keyframes sheet {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+.enter {
+  animation: rise 320ms var(--ease-out);
+}
+.sheet-in {
+  animation: sheet 300ms var(--ease-out);
+}
+.fade-in {
+  animation: fade 200ms var(--ease-out);
+}
+@media (prefers-reduced-motion: reduce) {
+  .enter,
+  .sheet-in,
+  .fade-in {
+    animation: none;
+  }
+}
+/* geplant, aber noch nicht erledigt: schraffiert statt gefüllt */
+.hatch {
+  background-image: repeating-linear-gradient(135deg, currentColor 0 1.5px, transparent 1.5px 5px);
+}

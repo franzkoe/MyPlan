@@ -1,1 +1,15 @@
-document.getElementById('root')!.textContent = 'MyPlan'
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import { HashRouter } from 'react-router-dom'
+import App from './App'
+import './index.css'
+import { boot } from './store'
+
+void boot()
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <HashRouter>
+      <App />
+    </HashRouter>
+  </StrictMode>,
+)
